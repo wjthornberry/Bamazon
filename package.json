@@ -1,0 +1,23 @@
+{
+  "name": "Bamazon",
+  "version": "1.0.0",
+  "description": "Bamazon is a Command Line Interface (CLI) app that takes in orders from customers and depletes stock from the store's inventory. It runs on Node.js and MySQL.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wjthornberry/Bamazon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wjthornberry/Bamazon/issues"
+  },
+  "homepage": "https://github.com/wjthornberry/Bamazon#readme",
+  "dependencies": {
+    "mysql": "^2.14.0"
+  }
+}

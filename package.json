@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/wjthornberry/Bamazon#readme",
   "dependencies": {
+    "inquirer": "^3.2.1",
     "mysql": "^2.14.0"
   }
 }

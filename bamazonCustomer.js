@@ -13,8 +13,57 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if(err) throw err;
-    console.log(`Connected as id ${connection.threadId} \n`);
+    readProducts();
 });
+
+function readProducts() {
+    console.log('Products available for purchase...\n');
+    connection.query('SELECT * FROM bamazon_DB', function (err, res) {
+        if (err) throw err;
+        // Log all results of the SELECT statement
+        console.log(res);
+        checkoutProcess();
+    });
+    // Log current query
+    console.log(query.sql);
+}
+// start f(x) prompts user for input
+function checkoutProcess() {
+    // Prompt user for input re: the item they would like to purchase
+    inquirer
+    .prompt([
+        {
+            name: 'item-id',
+            type: 'input',
+            message: 'Please enter the item ID number of the product you would like to buy.'
+        },
+        {
+            name: 'item-quantity',
+            type: 'input',
+            message: 'How many would you like to purchase?',
+            validate: function(value) {
+                if (isNaN(value) === false) {
+                    return true;
+                }   return false;
+            }    
+        }
+    ])
+    .then(function(answer) {
+        // Upon completetion of the user's input, insert a new item into the bamazon_DB with that info
+      connection.query(
+          "INSERT INTO bamazon_DB set ?",
+      {
+          item_id: answer.item-id,
+          stock_quantity: answer.item-quantity
+      },
+        function (err) {
+            if (err) throw err;
+            console.log('Checkout process complete.')
+            // re-prompt the user to purchase another item
+            checkoutProcess();
+        }
+      );
+    });
 
 
 
@@ -113,12 +162,3 @@ function deleteProduct() {
     );
 }
 
-function readProducts() {
-    console.log('Selecting all products...\n');
-    connection.query('SELECT * FROM bamazon_DB', function (err, res) {
-        if (err) throw err;
-        // Log all results of the SELECT statement
-        console.log(res);
-        connection.end();
-    });
-}

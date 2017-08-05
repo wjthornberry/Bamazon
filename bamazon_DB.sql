@@ -13,13 +13,13 @@ CREATE TABLE products (
     -- cannot contain null and is a unique id for each product --
     item_id INT(12) AUTO_INCREMENT NOT NULL,
     -- product's name --
-    product_name VARCHAR(255) NULL,
+    product_name VARCHAR(255) NOT NULL,
     -- department's name -- 
-    department_name VARCHAR(255) NULL,
+    department_name VARCHAR(255) NOT NULL,
     -- item's cost to customer; max number of digits is 10 and two of the digits will be decimals --
-    price DECIMAL(10,2), NULL,
+    price DECIMAL(10,2), NOT NULL,
     -- stock quantity, or how much of the product is available in stores --
-    stock_quantity INT(255) NULL,
+    stock_quantity INT(255) NOT NULL,
     -- Sets the primary key of the table to item_id --
     PRIMARY KEY (item_id)
 );

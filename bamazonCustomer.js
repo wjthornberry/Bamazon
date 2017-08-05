@@ -13,6 +13,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if(err) throw err;
+    console.log(`Connected as id ${connection.threadId} \n`);
 });
 
 
@@ -37,22 +38,62 @@ connection.connect(function (err) {
 // of their purchase
 
 // Code from class for createProduct fx
-// connection.connect(function (err) {
-//     if(err) throw err;
-//     createProduct();
-// });
+connection.connect(function (err) {
+    if(err) throw err;
+    console.log(`Connected as id ${connection.threadId} \n`);
+    createProduct();
+});
 
-// function createProduct() {
-//     var query = connection.query('Add product?'
-//     {
-//         item_id: 'B018KFP8E4',
-//         product_name: 'Myofascial Release Foam Roller',
-//         department_name: 'Sports & Outdoors',
-//         price: 18.99,
-//         stock_quantity: 20
-//     },
-//     function (err, res) {
-//         console.log(err);
-//         console.log(`${res.affectedRows} product successfully inserted.`);
-//     }
-// )
+function createProduct() {
+    console.log('Inserting a new product...\n');
+    var query = connection.query(
+        'INSERT INTO bamazon_DB SET?',
+    {
+        item_id: 'B018KFP8E4',
+        product_name: 'Myofascial Release Foam Roller',
+        department_name: 'Sports & Outdoors',
+        price: 18.99,
+        stock_quantity: 20
+    },
+    function (err, res) {
+        console.log(err);
+        console.log(`${res.affectedRows} product successfully inserted.`);
+        UpdateProduct();
+    }
+);
+
+// Log the current query being run
+console.log(query.sql);
+}
+
+function updateProduct() {
+    console.log('Updating all product quantities \n');
+    var query = connection.query(
+        'UPDATE bamazon_DB SET ? WHERE ?',
+        [
+            {
+                item_id: ''
+
+            },
+            {
+                product_name: ''
+            },
+            {
+                department_name: ''
+            },
+            {
+                price: ''
+            },
+            {
+                stock_quantity:''
+            }
+        ],
+        function(err, res) {
+            console.log(`${res.affectedRows} products successfully updated.\n`);
+            // Call deleteProduct after updateProduct fx completes
+            delete Product();
+        }
+    );
+    // Log the current query being run 
+    console.log(query.sql)
+}

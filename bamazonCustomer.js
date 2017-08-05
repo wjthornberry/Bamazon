@@ -37,7 +37,7 @@ connection.connect(function (err) {
 // Once the update goes through, show the customer the total cost 
 // of their purchase
 
-// Code from class for createProduct fx
+// Code from class for createProduct f(x)
 connection.connect(function (err) {
     if(err) throw err;
     console.log(`Connected as id ${connection.threadId} \n`);
@@ -90,10 +90,25 @@ function updateProduct() {
         ],
         function(err, res) {
             console.log(`${res.affectedRows} products successfully updated.\n`);
-            // Call deleteProduct after updateProduct fx completes
+            // Call deleteProduct after updateProduct f(x) completes
             delete Product();
         }
     );
     // Log the current query being run 
     console.log(query.sql)
+}
+
+function deleteProduct() {
+    console.log('Deleteing product...\n');
+    connection.query(
+        "DELETE FROM bamazon_DB WHERE ?",
+        {
+            item_id: ''
+        },
+        function (err, res) {
+            console.log(`${res.affectedRows} product deleted.\n`);
+            // Call readProducts after deleteProduct f(x) completes
+            readProducts();
+        }
+    );
 }

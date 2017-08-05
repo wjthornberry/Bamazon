@@ -6,23 +6,16 @@ var inquirer = require('inquirer');
 var connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
-
-    // Username
     user: 'root',
-    // Password
     password: '',
     database: 'bamazon_DB'
 });
 
 connection.connect(function (err) {
     if(err) throw err;
-    console.log(`Connected as ${connection.threadID}`);
-
-    connection.query("SELECT * FROM products", function(err, res) {
-        if (err) throw err;
-        console.log(res);
-    });
 });
+
+
 
 // Challenge #1: Customer View
 // displayItems function
@@ -42,3 +35,24 @@ connection.connect(function (err) {
 // Update SQL database to reflect the remaining quantity
 // Once the update goes through, show the customer the total cost 
 // of their purchase
+
+// Code from class for createProduct fx
+// connection.connect(function (err) {
+//     if(err) throw err;
+//     createProduct();
+// });
+
+// function createProduct() {
+//     var query = connection.query('Add product?'
+//     {
+//         item_id: 'B018KFP8E4',
+//         product_name: 'Myofascial Release Foam Roller',
+//         department_name: 'Sports & Outdoors',
+//         price: 18.99,
+//         stock_quantity: 20
+//     },
+//     function (err, res) {
+//         console.log(err);
+//         console.log(`${res.affectedRows} product successfully inserted.`);
+//     }
+// )

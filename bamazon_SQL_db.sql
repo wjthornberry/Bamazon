@@ -26,34 +26,26 @@ CREATE TABLE products (
 
 -- Creates new rows containing data in all named columns --
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("JL421 Badonkadonk Land Cruiser/Tank", "Everything Else", 19,999.95, 2);
+VALUES 
+("JL421 Badonkadonk Land Cruiser/Tank", "Everything Else", 19,999.95, 2),
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Custom Nicolas Cage Pillowcase Standard Size Design Cotton Pillow Case P-170", "Home and Kitchen", 6.00, 50);
+("Custom Nicolas Cage Pillowcase Standard Size Design Cotton Pillow Case P-170", "Home and Kitchen", 6.00, 50),
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Jeff Goldblum Custom Waterproof Shower Curtain 60x72 Inch Bath Curtains by LiangZP", "Home and Kitchen", 15.00, 10);
+("Jeff Goldblum Custom Waterproof Shower Curtain 60x72 Inch Bath Curtains by LiangZP", "Home and Kitchen", 15.00, 10),
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Duncan Butterfly Yo-Yo", "Toys and Games", 5.43, 20);
+("Duncan Butterfly Yo-Yo", "Toys and Games", 5.43, 20),
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Exploding Kittens: NSFW Edition", "Toys and Games", 19.99, 30);
+("Exploding Kittens: NSFW Edition", "Toys and Games", 19.99, 30),
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Zen Reflections Juniper Bonsai", "Patio, Lawn, and Garden", 26.99, 15);
+("Zen Reflections Juniper Bonsai", "Patio, Lawn, and Garden", 26.99, 15),
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Chemex 6-Cup Classic Series Glass Coffee Maker", "Kitchen & Dining", 37.82, 30);
+("Chemex 6-Cup Classic Series Glass Coffee Maker", "Kitchen & Dining", 37.82, 30),
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Blue Bottle Coffee - New Orleans Iced Kit", "Grocery & Gourmet Food", 36.99, 50);
+("Blue Bottle Coffee - New Orleans Iced Kit", "Grocery & Gourmet Food", 36.99, 50),
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("You Don't Know JS: Up & Going", "Books", 4.99, 1);
+("You Don't Know JS: Up & Going", "Books", 4.99, 1),
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Kodak Portra 400 Professional ISO 400, 35mm, 36 Exposures, Color Negative Film 5 Roll per Pack", "Film", 43.90, 3);
+("Kodak Portra 400 Professional ISO 400, 35mm, 36 Exposures, Color Negative Film 5 Roll per Pack", "Film", 43.90, 3),
 
 SELECT * FROM products;
 

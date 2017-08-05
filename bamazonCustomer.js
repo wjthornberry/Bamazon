@@ -23,3 +23,22 @@ connection.connect(function (err) {
         console.log(res);
     });
 });
+
+// Challenge #1: Customer View
+// displayItems function
+// display all items, including product numbers, names, and prices
+
+// Prompt the user w/two messages
+// 1) Product ID:
+// 2) Quantity:
+
+// Customer places order, app check if the store has enough
+// of the product to meet the customer's request
+
+// If not, log a phrase like `This item is out of stock` 
+// and prevent the order from going through
+
+// If the store has enough quantity of the item, fulfill customer's order
+// Update SQL database to reflect the remaining quantity
+// Once the update goes through, show the customer the total cost 
+// of their purchase

@@ -11,7 +11,7 @@ USE bamazon_SQL_db;
 CREATE TABLE products (
     -- Makes a numeric column called "item_id" which 
     -- cannot contain null and is a unique id for each product --
-    item_id INTEGER(12) NOT NULL,
+    item_id INTEGER(12) AUTO_INCREMENT NOT NULL,
     -- product's name --
     product_name VARCHAR(255) NOT NULL,
     -- department's name -- 
@@ -20,4 +20,6 @@ CREATE TABLE products (
     price DECIMAL(10,2),
     -- stock quantity, or how much of the product is available in stores --
     stock_quantity INTEGER(255) NOT NULL,
+    -- Sets the primary key of the table to item_id --
+    PRIMARY KEY (item_id)
 );

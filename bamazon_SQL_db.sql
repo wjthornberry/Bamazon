@@ -55,4 +55,6 @@ VALUES ("You Don't Know JS: Up & Going", "Books", 4.99, 1);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Kodak Portra 400 Professional ISO 400, 35mm, 36 Exposures, Color Negative Film 5 Roll per Pack", "Film", 43.90, 3);
 
+SELECT * FROM products;
+
 

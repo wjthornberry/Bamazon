@@ -71,7 +71,7 @@ function completeTransaction(ItemID, quantityRequested) {
     connection.query(`SELECT * FROM products WHERE ItemID = ${ItemID}`, function(err, res) {
         if(err) throw err;
         // a) Checks quantity to ensure there is adequate stock
-        if (quantityRequested <= response[0].StockQuantity) {
+        if (quantityRequested <= res[0].StockQuantity) {
             // If there is, calculates the total cost
             var totalCost = res[0].Price * quantityRequested;
             // Informs the user that item is available at that quantity and tells them the totacl cost

@@ -11,7 +11,7 @@ USE Bamazon;
 CREATE TABLE products (
     -- Makes a numeric column called "item_id" which 
     -- cannot contain null and is a unique id for each product --
-    ItemID INT(12) AUTO_INCREMENT NOT NULL,
+    itemID INT(12) AUTO_INCREMENT NOT NULL,
     -- product's name --
     Product VARCHAR(255) NOT NULL,
     -- department's name -- 
@@ -25,7 +25,7 @@ CREATE TABLE products (
 );
 
 -- Creates new rows containing data in all named columns --
-INSERT INTO products (ItemID, Product, Department, Price, Quantity)
+INSERT INTO products (ItemID, Product, Department, Price, StockQuantity)
 VALUES 
 (1, "JL421 Badonkadonk Land Cruiser/Tank", "Everything Else", 19999.95, 2),
 

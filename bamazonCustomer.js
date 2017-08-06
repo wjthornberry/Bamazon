@@ -18,12 +18,15 @@ connection.connect(function (err) {
 
 // Lists the contents of the Bamazon table, products
 function displayProducts() {
-    console.log('Products available for purchase...\n');
-                console.log('-----------------------------------------------------------------------');
+    console.log('-----------------------------------------------------------------------');
     connection.query('SELECT * FROM products', function (err, res) {
         if (err) throw err;
         // Log all results of the SELECT statement
-        console.log(res);
+        console.log('Products available for purchase:\n---------------------\n');
+        for (var i = 0; i < res.length; i++) {
+            console.log(`----------------------\nItemID: ${res[i].ItemID}\nProduct: ${res[i].Product}\nPrice: ${res[i].Price}\n--------------------\n`);
+        }
+        // console.log(res);
         checkoutInput();
     });
     // Log current query
@@ -126,8 +129,8 @@ function completeTransaction(ItemID, quantityRequested) {
         } else {
             console.log('Uh oh — it looks like we\'re all out of that. Please try again later or select another item.');
                         console.log('-----------------------------------------------------------------------');
-                        console.log('Will display items again in 4 seconds.')
-            waitMsg = setTimeout(displayProducts, 4000);
+                        console.log('Will display items again in 5 seconds.')
+            waitMsg = setTimeout(displayProducts, 5000);
         };
         // recursion to re-display the products table and allow the user to select another item
         // displayProducts();

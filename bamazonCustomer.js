@@ -33,12 +33,12 @@ function checkoutProcess() {
     inquirer
         .prompt([
             {
-                name: 'item-id',
+                name: 'ItemID',
                 type: 'input',
-                message: 'Please enter the item ID number of the product you would like to buy.'
+                message: 'Please enter the ItemID number of the product you would like to buy.'
             },
             {
-                name: 'item-quantity',
+                name: 'Quantity',
                 type: 'input',
                 message: 'How many would you like to purchase?',
                 validate: function (value) {
@@ -54,8 +54,8 @@ function checkoutProcess() {
             connection.query(
                 "INSERT INTO products set ?",
                 {
-                    item_id: answer.item - id,
-                    stock_quantity: answer.item - quantity
+                    ItemID: answer.item - id,
+                    Quantity: answer.item - quantity
                 },
                 function (err) {
                     if (err) throw err;

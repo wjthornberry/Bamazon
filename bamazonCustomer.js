@@ -13,12 +13,12 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if(err) throw err;
-    readProducts();
+    displayProducts();
 });
 
-function readProducts() {
+function displayProducts() {
     console.log('Products available for purchase...\n');
-    connection.query('SELECT * FROM bamazon_DB', function (err, res) {
+    connection.query('SELECT * FROM products', function (err, res) {
         if (err) throw err;
         // Log all results of the SELECT statement
         console.log(res);
@@ -52,7 +52,7 @@ function checkoutProcess() {
         .then(function (answer) {
             // Upon completetion of the user's input, insert a new item into the bamazon_DB with that info
             connection.query(
-                "INSERT INTO bamazon_DB set ?",
+                "INSERT INTO products set ?",
                 {
                     item_id: answer.item - id,
                     stock_quantity: answer.item - quantity

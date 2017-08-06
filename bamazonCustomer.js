@@ -5,6 +5,20 @@ var inquirer = require('inquirer');
 // Require colors node package
 var colors = require('colors');
 
+// colors basic theme
+colors.setTheme({
+  silly: 'rainbow',
+  input: 'grey',
+  verbose: 'cyan',
+  prompt: 'grey',
+  info: 'green',
+  data: 'grey',
+  help: 'cyan',
+  warn: 'yellow',
+  debug: 'blue',
+  error: 'red'
+});
+
 var connection = mysql.createConnection({
     host: 'localhost',
     port: 8889,
@@ -16,16 +30,15 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if(err) throw err;
     displayProducts();
+    console.log('\nWelcome to Bamazon!\n');
 });
 
 // Lists the contents of the Bamazon table, products
 function displayProducts() {
-    console.log('Welcome to Bamazon!');
-    console.log('-----------------------------------------------------------------------');
     connection.query('SELECT * FROM products', function (err, res) {
         if (err) throw err;
         // Log all results of the SELECT statement
-        console.log('Products:\n-----------------------------------------------------------------------\n');
+        console.log('Products:');
         for (var i = 0; i < res.length; i++) {
             console.log(`-----------------------------------------------------------------------\nItem ID: ${res[i].item_id}\nProduct: ${res[i].product_name}\nDepartment: ${res[i].department_name}\nPrice: $${res[i].price}\n-----------------------------------------------------------------------\n`);
         }
@@ -43,12 +56,12 @@ function checkoutProcess() {
             {
                 name: 'item_id',
                 type: 'input',
-                message: 'Please enter the ItemID number of the product you would like to buy.'
+                message: 'Please enter the ItemID number of the product you would like to buy.'.input,
             },
             {
                 name: 'quantity',
                 type: 'input',
-                message: 'How many would you like to purchase?',
+                message: 'How many would you like to purchase?'.input,
                 validate: function (value) {
                     if (isNaN(value) === false) {
                         return true;
@@ -58,6 +71,7 @@ function checkoutProcess() {
             }
         ])
         .then(function (answer) {
+            var waitMsg;
             var item = answer.item_id;
             var quantity = answer.quantity;
             // Checks products db in order to confirm the itemID exists in the customer's desired quantity
@@ -70,32 +84,38 @@ function checkoutProcess() {
                 if (err) throw err;
                 // Checks to see if the user entered a correct itemID
                 if (data.length === 0) {
-                    console.log(`Uh oh. That doesn't seem to be a valid Item ID. Please try again.`);
+                    console.log(`Uh oh. That doesn't seem to be a valid Item ID. Please try again.`.error);
                     displayProducts();
                 } else {
                     var productData = data[0];
 
                     // Checks the db to ensure there is enough product to fulfill the user's order request
                     if (quantity <= productData.stock_quantity) {
-                        console.log('Hooray! We indeed have that item in stock. Processing your order now!');
+                        console.log('Item status:')
+                        console.log('In stock.'.green);
+                        console.log('Processing your order now...');
                         // Not sure if my syntax is correct for this line -- revisit later
                         var updateQueryStr = `UPDATE products SET stock_quantity = ${productData.stock_quantity - quantity} WHERE item_id = ${item}`;
                         // Update inventory
                         connection.query(updateQueryStr, function(err, data) {
                             if (err) throw err;
                             // Check syntax
-                            console.log(`Okay, your order has been placed! The total is $${productData.price * quantity}`);
-                            console.log('Thanks for shopping at Bamazon.');
+                            console.log('Okay, your order has been placed! The total is:')
+                            console.log(`$${productData.price * quantity}`.red);
+                            console.log('Thanks for shopping at Bamazon.'.cyan);
                             console.log('\n-----------------------------------------------------------------------\n');
                             // Ends the database connection
                             connection.end();
                         }) 
                     } else  {
-                        console.log('Uh oh, it seems that we currently don\'t have enough product in our warehourse to fulfill this order.');
+                        console.log('Item status:');
+                        console.log('Out of stock.'.error);
+                        console.log(`Uh oh, it seems that we currently don't have enough product in our warehourse to fulfill this order.`);
                         console.log('\n-----------------------------------------------------------------------\n');
                         console.log('Would you like to order something else, perhaps?');
                         console.log('\n-----------------------------------------------------------------------\n');
-                        displayProducts();
+                        console.log('Will display items again in four seconds.')
+                        waitMsg = setTimeout(displayProducts, 4000);
                     }
                 }
             })

@@ -19,7 +19,7 @@ CREATE TABLE products (
     -- item's cost to customer; max number of digits is 10 and two of the digits will be decimals --
     price DECIMAL(10,2) NOT NULL,
     -- stock quantity, or how much of the product is available in stores --
-    stock_quantity INT(255) NOT NULL,
+    stock_quantity DECIMAL(255) NOT NULL,
     -- Sets the primary key of the table to item_id --
     PRIMARY KEY (item_id)
 );

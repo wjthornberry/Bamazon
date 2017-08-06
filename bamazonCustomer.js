@@ -24,7 +24,7 @@ function displayProducts() {
         // Log all results of the SELECT statement
         console.log('Products available for purchase:\n---------------------\n');
         for (var i = 0; i < res.length; i++) {
-            console.log(`----------------------\nItemID: ${res[i].ItemID}\nProduct: ${res[i].Product}\nPrice: ${res[i].Price}\n--------------------\n`);
+            console.log(`----------------------\nItem ID: ${res[i].item_id}\nProduct: ${res[i].product_name}\nDepartment: ${res[i].department_name}\nPrice: ${res[i].price}\n--------------------\n`);
         }
         // console.log(res);
         checkoutProcess();
@@ -38,7 +38,7 @@ function checkoutProcess() {
     inquirer
         .prompt([
             {
-                name: 'itemID',
+                name: 'item_id',
                 type: 'input',
                 message: 'Please enter the ItemID number of the product you would like to buy.'
             },
@@ -55,7 +55,7 @@ function checkoutProcess() {
             }
         ])
         .then(function (answer) {
-            var item = answer.itemID;
+            var item = answer.item_id;
             var quantity = answer.quantity;
             // Checks products db in order to confirm the itemID exists in the customer's desired quantity
             console.log('-----------------------------------------------------------------------')
@@ -63,7 +63,7 @@ function checkoutProcess() {
             console.log('-----------------------------------------------------------------------')
             var queryStr = 'SELECT * FROM products WHERE ?';
             
-            connection.query(queryStr, {itemID: item}, function(err, data) {
+            connection.query(queryStr, {item_id: item}, function(err, data) {
                 if (err) throw err;
                 // Checks to see if the user entered a correct itemID
                 if (data.length === 0) {
@@ -73,15 +73,15 @@ function checkoutProcess() {
                     var productData = data[0];
 
                     // Checks the db to ensure there is enough product to fulfill the user's order request
-                    if (quantity <= productData.StockQuantity) {
+                    if (quantity <= productData.stock_quantity) {
                         console.log('Hooray! We indeed have that item in stock. Processing your order now!');
                         // Not sure if my syntax is correct for this line -- revisit later
-                        var updateQueryStr = `UPDATE products SET StockQuantity = ${productData.StockQuantity - quantity} WHERE itemID = ${item}`;
+                        var updateQueryStr = `UPDATE products SET stock_quantity = ${productData.stock_quantity - quantity} WHERE item_id = ${item}`;
                         // Update inventory
                         connection.query(updateQueryStr, function(err, data) {
                             if (err) throw err;
                             // Check syntax
-                            console.log(`Okay, your order has been placed! The total is $${productData.price} * quantity`);
+                            console.log(`Okay, your order has been placed! The total is $${productData.price * quantity}`);
                             console.log('Thanks for shopping at Bamazon.');
                             console.log('\n-----------------------------------------------------------------------\n');
                             // Ends the database connection

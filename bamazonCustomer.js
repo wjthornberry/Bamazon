@@ -19,6 +19,7 @@ connection.connect(function (err) {
 // Lists the contents of the Bamazon table, products
 function displayProducts() {
     console.log('Products available for purchase...\n');
+                console.log('-----------------------------------------------------------------------');
     connection.query('SELECT * FROM products', function (err, res) {
         if (err) throw err;
         // Log all results of the SELECT statement
@@ -51,7 +52,6 @@ function checkoutInput() {
             }
         ])
         .then(function (answer) {
-            var waitMsg;
             var itemIDRequested = answer.ItemID;
             var quantityRequested = answer.Quantity;
             console.log('-----------------------------------------------------------------------')
@@ -95,6 +95,7 @@ function completeTransaction(ItemID, quantityRequested) {
                     ]
                 })
                 .then(function(answer) {
+                    var waitMsg;
                     switch (answer.action) {
                         case 'Cash is king.':
                         console.log('We\'ve not seen cash here in these parts for quite some time, but, yes, we still accept it.')
@@ -124,9 +125,12 @@ function completeTransaction(ItemID, quantityRequested) {
                 connection.query(`UPDATE products SET StockQuantity = StockQuantity - ${quantityRequested} WHERE ItemID = ${ItemID}`);
         } else {
             console.log('Uh oh — it looks like we\'re all out of that. Please try again later or select another item.');
+                        console.log('-----------------------------------------------------------------------');
+                        console.log('Will display items again in 4 seconds.')
+            waitMsg = setTimeout(displayProducts, 4000);
         };
         // recursion to re-display the products table and allow the user to select another item
-        displayProducts();
+        // displayProducts();
     });
 };
 

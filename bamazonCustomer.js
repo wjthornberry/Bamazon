@@ -2,6 +2,8 @@
 var mysql = require('mysql');
 // Require inquirer node package
 var inquirer = require('inquirer');
+// Require colors node package
+var colors = require('colors');
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -18,13 +20,14 @@ connection.connect(function (err) {
 
 // Lists the contents of the Bamazon table, products
 function displayProducts() {
+    console.log('Welcome to Bamazon!');
     console.log('-----------------------------------------------------------------------');
     connection.query('SELECT * FROM products', function (err, res) {
         if (err) throw err;
         // Log all results of the SELECT statement
-        console.log('Products available for purchase:\n-----------------------------------------------------------------------\n');
+        console.log('Products:\n-----------------------------------------------------------------------\n');
         for (var i = 0; i < res.length; i++) {
-            console.log(`-----------------------------------------------------------------------\nItem ID: ${res[i].item_id}\nProduct: ${res[i].product_name}\nDepartment: ${res[i].department_name}\nPrice: ${res[i].price}\n-----------------------------------------------------------------------\n`);
+            console.log(`-----------------------------------------------------------------------\nItem ID: ${res[i].item_id}\nProduct: ${res[i].product_name}\nDepartment: ${res[i].department_name}\nPrice: $${res[i].price}\n-----------------------------------------------------------------------\n`);
         }
         // console.log(res);
         checkoutProcess();

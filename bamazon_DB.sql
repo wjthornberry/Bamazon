@@ -27,7 +27,7 @@ CREATE TABLE products (
 -- Creates new rows containing data in all named columns --
 INSERT INTO products (item_id, product, department, price, stock_quantity)
 VALUES 
-(1, "JL421 Badonkadonk Land Cruiser/Tank", "Everything Else", 19999.95, 2),
+(1, "JL421 Badonkadonk Land Cruiser/Tank", "Everything Else", 19,999.95, 2),
 
 (2, "Custom Nicolas Cage Pillowcase Standard Size Design Cotton Pillow Case P-170", "Home and Kitchen", 6.00, 50),
 

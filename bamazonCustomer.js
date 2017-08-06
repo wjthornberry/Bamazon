@@ -22,9 +22,9 @@ function displayProducts() {
     connection.query('SELECT * FROM products', function (err, res) {
         if (err) throw err;
         // Log all results of the SELECT statement
-        console.log('Products available for purchase:\n---------------------\n');
+        console.log('Products available for purchase:\n-----------------------\n');
         for (var i = 0; i < res.length; i++) {
-            console.log(`----------------------\nItemID: ${res[i].ItemID}\nProduct: ${res[i].Product}\nPrice: ${res[i].Price}\n--------------------\n`);
+            console.log(`------------------------\nItemID: ${res[i].ItemID}\nProduct: ${res[i].Product}\nPrice: ${res[i].Price}\n-----------------------\n`);
         }
         // console.log(res);
         checkoutInput();

@@ -24,7 +24,7 @@ function displayProducts() {
         // Log all results of the SELECT statement
         console.log('Products available for purchase:\n-----------------------------------------------------------------------\n');
         for (var i = 0; i < res.length; i++) {
-            console.log(`-----------------------------------------------------------------------\nItem ID: ${res[i].item_id}\nProduct: ${res[i].product_name}\nDepartment: ${res[i].department_name}\nPrice: ${res[i].price}\n--------------------\n`);
+            console.log(`-----------------------------------------------------------------------\nItem ID: ${res[i].item_id}\nProduct: ${res[i].product_name}\nDepartment: ${res[i].department_name}\nPrice: ${res[i].price}\n-----------------------------------------------------------------------\n`);
         }
         // console.log(res);
         checkoutProcess();

@@ -16,6 +16,7 @@ connection.connect(function (err) {
     displayProducts();
 });
 
+// Lists the contents of the Bamazon table, products
 function displayProducts() {
     console.log('Products available for purchase...\n');
     connection.query('SELECT * FROM products', function (err, res) {
@@ -53,12 +54,83 @@ function checkoutInput() {
             var waitMsg;
             var itemIDRequested = answer.ItemID;
             var quantityRequested = answer.Quantity;
-            console.log('--------------------------------------------------------------------')
+            console.log('-----------------------------------------------------------------------')
             console.log('Checking our warehouse to see if this awesome item is still in stock...')
-            console.log('--------------------------------------------------------------------')
-            completePurchase(itemIDRequested, quantityRequested);
+            console.log('-----------------------------------------------------------------------')
+            completeTransaction(itemIDRequested, quantityRequested);
         });
 };
+
+// This f(x) 
+// a) Checks whether there is enough quantity of the item requested and either
+// b) Completes the transaction, showing the user the cost of their order 
+// AND deletes the purchased quantity from the products db 
+// OR
+// c) Informs them that their order could not be fulfilled
+function completeTransaction(ItemID, quantityRequested) {
+    connection.query(`SLECT * FROM products WHERE ItemID = ${ItemID}`, function(err, res) {
+        if(err) throw err;
+        // a) Checks quantity to ensure there is adequate stock
+        if (quantityRequested <= response[0].StockQuantity) {
+            // If there is, calculates the total cost
+            var totalCost = res[0].Price * quantityRequested;
+            // Informs the user that item is available at that quantity and tells them the totacl cost
+            console.log(`Great! We have plenty of ${res[0].Product}.`);
+            console.log('-----------------------------------------------------------------------');
+            console.log('Calculating total cost...');
+            console.log('-----------------------------------------------------------------------');
+            console.log(`The total cost for ${quantityRequested} ${res[0].Product} is ${totalCost}.`);
+            inquirer
+                .prompt({
+                    name: 'action',
+                    type: 'rawlist',
+                    message: 'How will you be paying today?',
+                    choices: [
+                        'Cash is king.',
+                        'I\'ll push you some plastic.',
+                        'Bitcoin, boyo.',
+                        'Do you accept Ether?',
+                        'I\'d like to pay in wompom.',
+                        'Got any dishes I can wash? I\'m broke but really need to buy this.'
+                    ]
+                })
+                .then(function(answer) {
+                    switch (answer.action) {
+                        case 'Cash is king.':
+                        console.log('We\'ve not seen cash here in these parts for quite some time, but, yes, we still accept it.')
+                        break;
+
+                        case 'I\'ll push you some plastic.':
+                        console.log('Plastic works. Lemme give that puppy a swipe.')
+                        break;
+
+                        case 'Bitcoin, boyo.':
+                        console.log('Step right up — we\'d be more than happy to take that Bitcoin out of your hardware wallet.')
+                        break;
+
+                        case 'Do you accept Ether?':
+                        console.log('Of course! Why wouldn\'t we?')
+                        break;
+
+                        case 'I\'d like to pay in wompom.':
+                        console.log('That\'s fine, but I\'m going to need to check the exchange rate on that. Gimme a sec.')
+                        break;
+
+                        case 'Got any dishes I can wash? I\'m broke but really need to buy this.':
+                        console.log('No, but go ahead and take it — Jeff isn\'t watching.')
+                        break;
+                    }
+                });
+                connection.query(`UPDATE products SET StockQuantity = StockQuantity - ${quantityRequested} WHERE ItemID = ${ItemID}');
+        } else {
+            console.log('Uh oh — it looks like we\'re all out of that. Please try again later or select another item.');
+        };
+        // recursion to re-display the products table and allow the user to select another item
+        displayProducts();
+    });
+};
+
+
 
 // Challenge #1: Customer View
 // displayItems function

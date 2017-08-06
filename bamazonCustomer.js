@@ -68,7 +68,7 @@ function checkoutInput() {
 // OR
 // c) Informs them that their order could not be fulfilled
 function completeTransaction(ItemID, quantityRequested) {
-    connection.query(`SLECT * FROM products WHERE ItemID = ${ItemID}`, function(err, res) {
+    connection.query(`SELECT * FROM products WHERE ItemID = ${ItemID}`, function(err, res) {
         if(err) throw err;
         // a) Checks quantity to ensure there is adequate stock
         if (quantityRequested <= response[0].StockQuantity) {
@@ -121,7 +121,7 @@ function completeTransaction(ItemID, quantityRequested) {
                         break;
                     }
                 });
-                connection.query(`UPDATE products SET StockQuantity = StockQuantity - ${quantityRequested} WHERE ItemID = ${ItemID}');
+                connection.query(`UPDATE products SET StockQuantity = StockQuantity - ${quantityRequested} WHERE ItemID = ${ItemID}`);
         } else {
             console.log('Uh oh — it looks like we\'re all out of that. Please try again later or select another item.');
         };

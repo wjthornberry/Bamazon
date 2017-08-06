@@ -63,12 +63,37 @@ function checkoutProcess() {
             console.log('-----------------------------------------------------------------------')
             var queryStr = 'SELECT * FROM products WHERE ?';
             
-            connection.query(queryStr, ${itemID: item}, function(err, data) {
+            connection.query(queryStr, {itemID: item}, function(err, data) {
                 if (err) throw err;
                 // Checks to see if the user entered a correct itemID
                 if (data.length === 0) {
                     console.log(`Uh oh. That doesn't seem to be a valid Item ID. Please try again.`);
                     displayProducts();
+                } else {
+                    var productData = data[0];
+
+                    // Checks the db to ensure there is enough product to fulfill the user's order request
+                    if (quantity <= productData.StockQuantity) {
+                        console.log('Hooray! We indeed have that item in stock. Processing your order now!');
+                        // Not sure if my syntax is correct for this line -- revisit later
+                        var updateQueryStr = `UPDATE products SET StockQuantity = ${productData.StockQuantity - quantity} WHERE itemID = ${item}`;
+                        // Update inventory
+                        connection.query(updateQueryStr, function(err, data) {
+                            if (err) throw err;
+                            // Check syntax
+                            console.log(`Okay, your order has been placed! The total is $${productData.price} * quantity`);
+                            console.log('Thanks for shopping at Bamazon.');
+                            console.log('\n-----------------------------------------------------------------------\n');
+                            // Ends the database connection
+                            connection.end();
+                        }) 
+                    } else  {
+                        console.log('Uh oh, it seems that we currently don\'t have enough product in our warehourse to fulfill this order.');
+                        console.log('\n-----------------------------------------------------------------------\n');
+                        console.log('Would you like to order something else, perhaps?');
+                        console.log('\n-----------------------------------------------------------------------\n');
+                        displayProducts();
+                    }
                 }
             })
             // completeTransaction(itemIDRequested, quantityRequested);
@@ -81,34 +106,34 @@ function checkoutProcess() {
 // AND deletes the purchased quantity from the products db 
 // OR
 // c) Informs them that their order could not be fulfilled
-function completeTransaction(ItemID, quantityRequested) {
-    connection.query(`SELECT * FROM products' WHERE ItemID = ${ItemID}`, function(err, res) {
-        if(err) throw err;
-        // a) Checks quantity to ensure there is adequate stock
-        if (quantityRequested <= res[0].StockQuantity) {
-            // If there is, calculates the total cost
-            var totalCost = res[0].Price * quantityRequested;
-            // Informs the user that item is available at that quantity and tells them the totacl cost
-            console.log(`Great! We have plenty of ${res[0].Product}.`);
-            console.log('-----------------------------------------------------------------------');
-            console.log('Calculating total cost...');
-            console.log('-----------------------------------------------------------------------');
-            console.log(`The total cost for ${quantityRequested} ${res[0].Product} is ${totalCost}.`);
-            inquirer
-                .prompt({
-                    name: 'action',
-                    type: 'rawlist',
-                    message: 'How will you be paying today?',
-                    choices: [
-                        'Cash is king.',
-                        'I\'ll push you some plastic.',
-                        'Bitcoin, boyo.',
-                        'Do you accept Ether?',
-                        'I\'d like to pay in wompom.',
-                        'Got any dishes I can wash? I\'m broke but really need to buy this.'
-                    ]
-                })
-                .then(function(answer) {}
+// function completeTransaction(ItemID, quantityRequested) {
+//     connection.query(`SELECT * FROM products' WHERE ItemID = ${ItemID}`, function(err, res) {
+//         if(err) throw err;
+//         // a) Checks quantity to ensure there is adequate stock
+//         if (quantityRequested <= res[0].StockQuantity) {
+//             // If there is, calculates the total cost
+//             var totalCost = res[0].Price * quantityRequested;
+//             // Informs the user that item is available at that quantity and tells them the totacl cost
+//             console.log(`Great! We have plenty of ${res[0].Product}.`);
+//             console.log('-----------------------------------------------------------------------');
+//             console.log('Calculating total cost...');
+//             console.log('-----------------------------------------------------------------------');
+//             console.log(`The total cost for ${quantityRequested} ${res[0].Product} is ${totalCost}.`);
+//             inquirer
+//                 .prompt({
+//                     name: 'action',
+//                     type: 'rawlist',
+//                     message: 'How will you be paying today?',
+//                     choices: [
+//                         'Cash is king.',
+//                         'I\'ll push you some plastic.',
+//                         'Bitcoin, boyo.',
+//                         'Do you accept Ether?',
+//                         'I\'d like to pay in wompom.',
+//                         'Got any dishes I can wash? I\'m broke but really need to buy this.'
+//                     ]
+//                 })
+//                 .then(function(answer) {}
 //                     var waitMsg;
 //                     switch (answer.action) {
 //                         case 'Cash is king.':

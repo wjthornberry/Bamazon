@@ -22,13 +22,13 @@ function displayProducts() {
         if (err) throw err;
         // Log all results of the SELECT statement
         console.log(res);
-        checkoutProcess();
+        checkoutInput();
     });
     // Log current query
     //console.log(query.sql);
 }
 // start f(x) prompts user for input
-function checkoutProcess() {
+function checkoutInput() {
     // Prompt user for input re: the item they would like to purchase
     inquirer
         .prompt([
@@ -50,23 +50,16 @@ function checkoutProcess() {
             }
         ])
         .then(function (answer) {
-            // Upon completetion of the user's input, insert a new item into the bamazon_DB with that info
-            connection.query(
-                "INSERT INTO products set ?",
-                {
-                    ItemID: answer.item - id,
-                    Quantity: answer.item - quantity
-                },
-                function (err) {
-                    if (err) throw err;
-                    console.log('Checkout process complete.')
-                    // re-prompt the user to purchase another item
-                    checkoutProcess();
-                }
-            );
+            var waitMsg;
+            var itemIDRequested = answer.ItemID;
+            var quantityRequested = answer.Quantity;
+            console.log('--------------------------------------------------------------------')
+            console.log('Checking our warehouse to see if this awesome item is still in stock...')
+            console.log('--------------------------------------------------------------------')
+            completePurchase(itemIDRequested, quantityRequested);
         });
+};
 
-}
 // Challenge #1: Customer View
 // displayItems function
 // display all items, including product numbers, names, and prices

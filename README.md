@@ -51,6 +51,6 @@ The system will display the products currently in inventory and, after an Item I
 
 ## Copyright
 
-Jake Thornberry (C) 2017.
+[Jake Thornberry](jakethornberry.net) (C) 2017.
 
 

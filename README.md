@@ -41,13 +41,13 @@ The system will display the products currently in inventory and, after an Item I
 
 ## Screenshots
 
-![Customer Experience](Images/bamazon-01.png)
+![Customer Experience](images/bamazon-01.png)
 
-![Customer Experience](Images/bamazon-02.png)
+![Customer Experience](images/bamazon-02.png)
 
-![Customer Experience](Images/bamazon-03.png)
+![Customer Experience](images/bamazon-03.png)
 
-![Customer Experience](Images/bamazon-04.png)
+![Customer Experience](images/bamazon-04.png)
 
 ## Copyright
 

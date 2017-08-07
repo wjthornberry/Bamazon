@@ -118,7 +118,6 @@ function checkoutProcess() {
                     }
                 }
             })
-            // completeTransaction(itemIDRequested, quantityRequested);
         });
 };
 

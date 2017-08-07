@@ -33,6 +33,16 @@ The system will display the products currently in inventory and, after an Item I
 
 [Walkthrough](https://youtu.be/CUhP7hABPhg) on YouTube.
 
+## Screenshots
+
+![Customer Experience](Images/bamazon-01.png)
+
+![Customer Experience](Images/bamazon-02.png)
+
+![Customer Experience](Images/bamazon-03.png)
+
+![Customer Experience](Images/bamazon-04.png)
+
 ## Copyright
 
 Jake Thornberry (C) 2017.

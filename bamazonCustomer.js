@@ -7,7 +7,6 @@ var colors = require('colors');
 
 // colors basic theme
 colors.setTheme({
-  silly: 'rainbow',
   input: 'grey',
   verbose: 'cyan',
   prompt: 'grey',

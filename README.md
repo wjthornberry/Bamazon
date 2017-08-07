@@ -31,6 +31,7 @@ The system will display the products currently in inventory and, after an Item I
 
 ## Demo
 
+[Walkthrough](https://youtu.be/CUhP7hABPhg) on YouTube.
 
 ## Copyright
 
